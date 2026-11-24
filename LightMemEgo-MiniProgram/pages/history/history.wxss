@@ -1,0 +1,31 @@
+.question-line {
+  font-size: 28rpx;
+  margin-top: 16rpx;
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.answer-preview {
+  font-size: 25rpx;
+  color: #5c656e;
+  margin-top: 10rpx;
+  word-break: break-word;
+}
+
+.dark .answer-preview {
+  color: #a8b0b8;
+}
+
+.answer-full {
+  font-size: 25rpx;
+  margin-top: 14rpx;
+  white-space: pre-wrap;
+  word-break: break-word;
+  padding: 16rpx;
+  background: #f4f6f7;
+  border-radius: 12rpx;
+}
+
+.dark .answer-full {
+  background: #24292e;
+}

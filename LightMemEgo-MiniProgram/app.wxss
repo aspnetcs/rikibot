@@ -1,0 +1,312 @@
+/* Global styles. Colours mirror the Android / iOS clients: deep teal accent,
+   neon green status accents, near-black surfaces. */
+page {
+  background: #f2f4f5;
+  color: #16191c;
+  font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
+  font-size: 28rpx;
+  line-height: 1.55;
+}
+
+.page {
+  min-height: 100vh;
+  padding: 24rpx 24rpx 48rpx;
+  box-sizing: border-box;
+}
+
+.page.dark {
+  background: #101113;
+  color: #eef1f3;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 20rpx;
+  padding: 24rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 2rpx 12rpx rgba(16, 17, 19, 0.05);
+  box-sizing: border-box;
+}
+
+.dark .card {
+  background: #1b1e21;
+  box-shadow: none;
+}
+
+.card-title {
+  font-size: 26rpx;
+  color: #6c747d;
+  margin-bottom: 16rpx;
+}
+
+.dark .card-title {
+  color: #9aa3ac;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.row-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.grow {
+  flex: 1;
+  min-width: 0;
+}
+
+.muted {
+  color: #7c858e;
+  font-size: 24rpx;
+}
+
+.dark .muted {
+  color: #98a1aa;
+}
+
+.mono {
+  font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 22rpx;
+}
+
+.accent {
+  color: #00696d;
+}
+
+.dark .accent {
+  color: #35e0c0;
+}
+
+.divider {
+  height: 1rpx;
+  background: #e6e9ec;
+  margin: 18rpx 0;
+}
+
+.dark .divider {
+  background: #2d3237;
+}
+
+/* Pills */
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 8rpx 18rpx;
+  border-radius: 999rpx;
+  font-size: 22rpx;
+  background: #edf1f2;
+  color: #4b555e;
+}
+
+.dark .pill {
+  background: #272c31;
+  color: #c3cbd2;
+}
+
+.pill.ok {
+  background: #dff5ec;
+  color: #0a7a52;
+}
+
+.dark .pill.ok {
+  background: #123b2c;
+  color: #4dffa6;
+}
+
+.pill.warn {
+  background: #fff2d9;
+  color: #8a5a00;
+}
+
+.dark .pill.warn {
+  background: #3d2f12;
+  color: #ffc95c;
+}
+
+.pill.err {
+  background: #ffe6e6;
+  color: #a32323;
+}
+
+.dark .pill.err {
+  background: #411c1c;
+  color: #ff8a8a;
+}
+
+.pill.accent {
+  background: #00696d;
+  color: #ffffff;
+}
+
+/* Buttons */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 84rpx;
+  border-radius: 16rpx;
+  font-size: 28rpx;
+  background: #e9edee;
+  color: #263037;
+  border: none;
+  line-height: 84rpx;
+  padding: 0 24rpx;
+  box-sizing: border-box;
+}
+
+.btn::after {
+  border: none;
+}
+
+.dark .btn {
+  background: #2a3035;
+  color: #eef1f3;
+}
+
+.btn.primary {
+  background: #00696d;
+  color: #ffffff;
+}
+
+.btn.danger {
+  background: #a32323;
+  color: #ffffff;
+}
+
+.btn.small {
+  height: 64rpx;
+  line-height: 64rpx;
+  font-size: 24rpx;
+  border-radius: 12rpx;
+  padding: 0 20rpx;
+}
+
+.btn[disabled] {
+  opacity: 0.5;
+}
+
+.btn-row {
+  display: flex;
+  gap: 16rpx;
+}
+
+.btn-row > .btn {
+  flex: 1;
+}
+
+/* Inputs */
+.input {
+  height: 76rpx;
+  padding: 0 20rpx;
+  border-radius: 12rpx;
+  background: #f4f6f7;
+  color: #16191c;
+  font-size: 26rpx;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.dark .input {
+  background: #24292e;
+  color: #eef1f3;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 150rpx;
+  padding: 18rpx 20rpx;
+  border-radius: 12rpx;
+  background: #f4f6f7;
+  color: #16191c;
+  font-size: 26rpx;
+  box-sizing: border-box;
+}
+
+.dark .textarea {
+  background: #24292e;
+  color: #eef1f3;
+}
+
+.label {
+  font-size: 25rpx;
+  color: #5c656e;
+  margin-bottom: 10rpx;
+}
+
+.dark .label {
+  color: #a8b0b8;
+}
+
+.field {
+  margin-bottom: 26rpx;
+}
+
+/* Chips */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+}
+
+.chip {
+  padding: 12rpx 20rpx;
+  border-radius: 999rpx;
+  font-size: 24rpx;
+  background: #e9f3f3;
+  color: #00696d;
+  border: 1rpx solid #c9e3e3;
+}
+
+.dark .chip {
+  background: #163233;
+  color: #6ee6d6;
+  border-color: #285455;
+}
+
+.chip.active {
+  background: #00696d;
+  color: #ffffff;
+  border-color: #00696d;
+}
+
+/* Lists */
+.list-item {
+  padding: 22rpx 0;
+  border-bottom: 1rpx solid #e6e9ec;
+}
+
+.dark .list-item {
+  border-bottom-color: #2d3237;
+}
+
+.list-item:last-child {
+  border-bottom: none;
+}
+
+.empty {
+  text-align: center;
+  padding: 80rpx 0;
+  color: #8b939b;
+  font-size: 26rpx;
+}
+
+.hint {
+  font-size: 22rpx;
+  color: #8b939b;
+  line-height: 1.5;
+  margin-top: 12rpx;
+}
+
+.dark .hint {
+  color: #8d969e;
+}

@@ -1,0 +1,51 @@
+{
+  "pages": [
+    "pages/session/session",
+    "pages/history/history",
+    "pages/logs/logs",
+    "pages/settings/settings"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#101113",
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "LightMem-Ego",
+    "backgroundColor": "#F2F4F5",
+    "backgroundTextStyle": "light",
+    "enablePullDownRefresh": false
+  },
+  "tabBar": {
+    "color": "#8A9099",
+    "selectedColor": "#00A6AD",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/session/session",
+        "text": "会话",
+        "iconPath": "assets/tab/session.png",
+        "selectedIconPath": "assets/tab/session-on.png"
+      },
+      {
+        "pagePath": "pages/history/history",
+        "text": "历史",
+        "iconPath": "assets/tab/history.png",
+        "selectedIconPath": "assets/tab/history-on.png"
+      },
+      {
+        "pagePath": "pages/logs/logs",
+        "text": "日志",
+        "iconPath": "assets/tab/logs.png",
+        "selectedIconPath": "assets/tab/logs-on.png"
+      },
+      {
+        "pagePath": "pages/settings/settings",
+        "text": "设置",
+        "iconPath": "assets/tab/settings.png",
+        "selectedIconPath": "assets/tab/settings-on.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

@@ -1,0 +1,47 @@
+<view class="page {{themeDark ? 'dark' : ''}}">
+
+  <view class="card">
+    <view class="row-between">
+      <view class="card-title">问答记录（{{total}}）</view>
+      <text class="muted">本机保存，最多 500 条</text>
+    </view>
+    <view class="chips">
+      <view wx:for="{{filters}}" wx:key="key" class="chip {{activeFilter === item.key ? 'active' : ''}}" data-key="{{item.key}}" bindtap="onFilterTap">{{item.label}}</view>
+    </view>
+  </view>
+
+  <view wx:if="{{shown.length === 0}}" class="card">
+    <view class="empty">暂无记录</view>
+  </view>
+
+  <view wx:for="{{shown}}" wx:key="id" wx:for-item="item" class="card">
+    <view data-id="{{item.id}}" bindtap="onItemTap">
+      <view class="row-between">
+        <text class="pill {{item.source === 'voice' ? 'ok' : ''}}">{{item.sourceLabel}}</text>
+        <text class="muted">{{item.timeText}}</text>
+      </view>
+      <view class="question-line">Q · {{item.question}}</view>
+      <view wx:if="{{expanded === item.id}}" class="answer-full">A · {{item.answer}}</view>
+      <view wx:else class="answer-preview">{{item.answerPreview || '（无回答文本）'}}</view>
+      <view class="row-between" style="margin-top:12rpx">
+        <text class="muted mono">{{item.latencyText}} · 会话 {{item.sessionId}}</text>
+        <text class="muted">{{expanded === item.id ? '收起' : '展开'}}</text>
+      </view>
+    </view>
+    <view wx:if="{{expanded === item.id}}" class="btn-row" style="margin-top:18rpx">
+      <button class="btn small" data-id="{{item.id}}" catchtap="onCopy">复制</button>
+      <button class="btn small" data-id="{{item.id}}" catchtap="onDelete">删除</button>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">与其他客户端交换数据</view>
+    <view class="btn-row">
+      <button class="btn small" bindtap="onExport">导出 JSONL</button>
+      <button class="btn small" bindtap="onImport">导入剪贴板</button>
+      <button class="btn small" bindtap="onClearAll">清空</button>
+    </view>
+    <view class="hint">导出的每一行都是「包含一个 entry 字段的 JSON 对象」，与 Android 的 <text class="mono">lightmem_history.jsonl</text> 完全同格式，可直接互读。</view>
+  </view>
+
+</view>

@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+if [[ -f .env ]]; then
+  set -a
+  # shellcheck disable=SC1091
+  source .env
+  set +a
+fi
+# shellcheck disable=SC1091
+source "$(pwd)/scripts/llm_profile.sh"
+
+export OPENAI_API_KEY="${EM2MEM_EXTERNAL_OPENAI_API_KEY:-${OPENAI_API_KEY}}"
+export OPENAI_BASE_URL="${EM2MEM_EXTERNAL_OPENAI_BASE_URL:-${OPENAI_BASE_URL}}"
+export EM2MEM_LOCAL_LLM_ENABLED=0
+unset EM2MEM_LOCAL_LLM_NON_THINKING EM2MEM_LOCAL_LLM_BASE_URL
+
+if [[ -d .venv ]]; then
+  # shellcheck disable=SC1091
+  source .venv/bin/activate
+fi
+
+exec python online_mst_consolidation_worker.py "$@"

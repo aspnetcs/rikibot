@@ -1,0 +1,33 @@
+.log-card {
+  padding: 12rpx 18rpx;
+}
+
+.log-line {
+  padding: 12rpx 0;
+  border-bottom: 1rpx solid #eceff1;
+  word-break: break-all;
+  font-size: 21rpx;
+  line-height: 1.5;
+  color: #4c555d;
+}
+
+.dark .log-line {
+  border-bottom-color: #2d3237;
+  color: #c3cbd2;
+}
+
+.log-line.err {
+  color: #a32323;
+}
+
+.dark .log-line.err {
+  color: #ff8a8a;
+}
+
+.log-line.warn {
+  color: #8a5a00;
+}
+
+.dark .log-line.warn {
+  color: #ffc95c;
+}

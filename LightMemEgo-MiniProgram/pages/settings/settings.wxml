@@ -1,0 +1,90 @@
+<view class="page {{themeDark ? 'dark' : ''}}">
+
+  <view class="card">
+    <view class="card-title">后端服务</view>
+    <view class="label">API Base URL</view>
+    <input class="input" placeholder="https://your-domain/api" value="{{apiBaseURL}}" bindinput="onApiInput" />
+    <view class="btn-row" style="margin-top:18rpx">
+      <button class="btn small" bindtap="onCopyBase">复制</button>
+      <button class="btn small" bindtap="onTestConnection">测试连通性</button>
+    </view>
+    <view wx:if="{{testResult}}" class="hint accent">{{testResult}}</view>
+    <view class="divider"></view>
+    <view class="hint">开发阶段：在微信开发者工具「详情 → 本地设置」勾选「不校验合法域名」，可连本机或局域网 HTTP 服务。<text class="warn-text">真机预览与发布版必须使用已 ICP 备案的 HTTPS 域名</text>，不能用 IP、localhost 或自签证书；同时在小程序后台「开发管理 → 开发设置 → 服务器域名」里把该域名加入 request / uploadFile 合法域名。</view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">采集</view>
+
+    <view class="field">
+      <view class="label">上传帧率</view>
+      <picker range="{{frameLabels}}" value="{{frameIndex}}" bindchange="onFrameChange">
+        <view class="picker">{{frameLabels[frameIndex]}}</view>
+      </picker>
+    </view>
+
+    <view class="field">
+      <view class="label">摄像头</view>
+      <picker range="{{lensLabels}}" value="{{lensIndex}}" bindchange="onLensChange">
+        <view class="picker">{{lensLabels[lensIndex]}}</view>
+      </picker>
+    </view>
+
+    <view class="field">
+      <view class="label">主题</view>
+      <picker range="{{themeLabels}}" value="{{themeIndex}}" bindchange="onThemeChange">
+        <view class="picker">{{themeLabels[themeIndex]}}</view>
+      </picker>
+    </view>
+
+    <view class="divider"></view>
+    <view class="row-between setting-row">
+      <view class="grow">
+        <view>自动播放回答音频</view>
+        <view class="hint">后端返回 answer_audio_url 时自动播放</view>
+      </view>
+      <switch checked="{{autoPlayAnswer}}" bindchange="onAutoPlay" color="#00696d" />
+    </view>
+    <view class="row-between setting-row">
+      <view class="grow">
+        <view>请求后端 TTS</view>
+        <view class="hint">小程序没有系统朗读能力，只能播放后端返回的音频</view>
+      </view>
+      <switch checked="{{answerTTSEnabled}}" bindchange="onTTS" color="#00696d" />
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">预设问题（每行一条，最多 8 条）</view>
+    <textarea class="textarea" value="{{presetsText}}" bindinput="onPresetsInput" placeholder="What is in the current scene?" />
+  </view>
+
+  <view class="card">
+    <view class="btn-row">
+      <button class="btn primary" bindtap="onSave">保存设置</button>
+      <button class="btn" bindtap="onReset">恢复默认</button>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">本机数据</view>
+    <view class="row-between setting-row">
+      <text class="muted">上次会话</text>
+      <text class="mono">{{savedSession || '无'}}</text>
+    </view>
+    <view class="row-between setting-row">
+      <text class="muted">本地存储占用</text>
+      <text class="mono">{{storageInfo || '—'}}</text>
+    </view>
+    <view class="btn-row" style="margin-top:16rpx">
+      <button class="btn small" bindtap="onClearSession">清除会话记忆</button>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">关于</view>
+    <view class="muted">LightMem-Ego 微信小程序客户端 · input_mode = rokid_frame_audio · client_source = glasses</view>
+    <view class="hint">接口路径与 multipart 字段和 Android / iOS 客户端完全一致，后端无需改动。小程序无法在锁屏或切后台时继续采集，切后台会自动结束会话。</view>
+  </view>
+
+</view>

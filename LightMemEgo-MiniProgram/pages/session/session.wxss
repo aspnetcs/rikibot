@@ -1,0 +1,67 @@
+.camera-wrap {
+  position: relative;
+  width: 100%;
+  height: 420rpx;
+  border-radius: 20rpx;
+  overflow: hidden;
+  background: #0a0a0b;
+  margin-bottom: 20rpx;
+}
+
+.camera {
+  width: 100%;
+  height: 420rpx;
+}
+
+.camera-placeholder {
+  width: 100%;
+  height: 420rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #aab2ba;
+  font-size: 26rpx;
+  gap: 12rpx;
+}
+
+/* Off-screen but still rendered: Canvas 2D needs a real node with a backing
+   store. The node's pixel size is set from frame.width/height in JS. */
+.offscreen-canvas {
+  position: fixed;
+  left: -10000px;
+  top: 0;
+  width: 2px;
+  height: 2px;
+  pointer-events: none;
+}
+
+.recording-badge {
+  color: #ff5c5c;
+  font-size: 24rpx;
+  padding: 6rpx 0 18rpx;
+}
+
+.ask-row {
+  gap: 16rpx;
+}
+
+.ask-row .input {
+  flex: 1;
+}
+
+.answer-text {
+  display: block;
+  font-size: 27rpx;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.err-text {
+  color: #a32323;
+}
+
+.dark .err-text {
+  color: #ff8a8a;
+}

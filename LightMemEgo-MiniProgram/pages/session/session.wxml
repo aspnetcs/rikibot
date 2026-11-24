@@ -1,0 +1,137 @@
+<view class="page {{themeDark ? 'dark' : ''}}">
+
+  <!-- Permissions -->
+  <view wx:if="{{!carMode && (!cameraGranted || !recordGranted)}}" class="card">
+    <view class="row-between">
+      <view class="grow">
+        <view class="card-title">需要授权</view>
+        <view class="muted">采集第一视角画面与环境声音需要「摄像头」和「麦克风」。</view>
+      </view>
+      <button class="btn small primary" bindtap="requestPermissions">去授权</button>
+    </view>
+  </view>
+
+  <!-- First-person preview -->
+  <view class="camera-wrap">
+    <block wx:if="{{carMode}}">
+      <image wx:if="{{carCameraURL}}" class="camera" src="{{carCameraURL}}/frame.jpg?t={{carShot}}" mode="aspectFill" binderror="onCarPreviewError"></image>
+      <view wx:else class="camera-placeholder">
+        <text>已接入小车会话</text>
+        <text class="muted">未配置直连画面，手机不占用摄像头</text>
+      </view>
+    </block>
+    <block wx:else>
+      <camera wx:if="{{cameraGranted}}" class="camera" device-position="{{lens}}" flash="off" frame-size="medium" bindinitdone="onCameraInitDone" binderror="onCameraError"></camera>
+      <view wx:else class="camera-placeholder">
+        <text>摄像头预览</text>
+        <text class="muted">授权后显示</text>
+      </view>
+    </block>
+    <!-- Hidden Canvas 2D used to encode RGBA camera frames into JPEG -->
+    <canvas type="2d" id="frameCanvas" class="offscreen-canvas"></canvas>
+  </view>
+  <view wx:if="{{running}}" class="recording-badge">{{carMode ? '● 已接入小车会话 · 手机不采集' : '● 正在采集第一视角画面与声音'}}</view>
+  <view wx:if="{{cameraError}}" class="card err-text mono">{{cameraError}}</view>
+
+  <!-- Status -->
+  <view class="card">
+    <view class="row-between">
+      <view class="card-title">会话状态</view>
+      <text class="mono muted">{{displayDayLabel || dayLabel || '—'}}</text>
+    </view>
+    <view class="pills">
+      <view class="pill {{running ? 'ok' : (statusTone === 'err' ? 'err' : '')}}">{{status}}</view>
+      <view class="pill {{canAsk ? 'ok' : 'warn'}}">{{canAsk ? '可提问' : '等待记忆'}}</view>
+      <view class="pill {{memoryReady ? 'ok' : ''}}">{{memoryReady ? '记忆就绪' : '记忆加载中'}}</view>
+      <view class="pill">上传 {{frameUploadedCount}} 帧 / {{audioUploadedCount}} 段</view>
+      <view class="pill">后端 {{framesReceived}} / {{audioChunksReceived}}</view>
+    </view>
+    <view wx:if="{{networkError}}" class="hint err-text mono">{{networkError}}</view>
+    <view class="divider"></view>
+    <view class="muted mono" bindtap="onCopySession">会话 {{sessionId || '—'}} · {{frameIntervalMs}}ms/帧 · {{lens === 'front' ? '前置' : '后置'}}镜头（点击复制 ID）</view>
+    <view class="muted mono">后端 {{apiBaseLabel || '—'}}</view>
+  </view>
+
+  <!-- Controls -->
+  <view class="card">
+    <view class="btn-row">
+      <button wx:if="{{!running}}" class="btn primary" bindtap="onStart" disabled="{{starting}}">{{starting ? '连接中…' : '开始采集'}}</button>
+      <button wx:if="{{!running}}" class="btn" bindtap="onAttachCar" disabled="{{starting}}">接入小车</button>
+      <button wx:else class="btn danger" bindtap="onStop">{{carMode ? '断开' : '停止采集'}}</button>
+      <button class="btn" bindtap="onResume" disabled="{{running || starting || !resumeAvailable}}">续上次</button>
+    </view>
+    <view class="hint">「接入小车」会接入车上正在采集的会话：手机只轮询状态和提问，不采集、不占用摄像头，断开也不会结束车上采集。切到后台或锁屏会自动结束本地采集（小程序系统限制）。</view>
+  </view>
+
+  <!-- Optional: picture straight from the car's own HTTP service -->
+  <view wx:if="{{carMode}}" class="card">
+    <view class="card-title">小车画面直连</view>
+    <view class="row ask-row">
+      <input class="input grow" placeholder="http://192.168.137.181:8080" value="{{carCameraInput}}" bindinput="onCarCameraInput" />
+      <button class="btn small primary" bindtap="onSaveCarCamera">应用</button>
+    </view>
+    <view class="muted">车端先跑 car_http_server.py，再填这个地址。这里只取画面，提问与记忆仍走后端。</view>
+    <view wx:if="{{carCameraError}}" class="hint err-text">{{carCameraError}}</view>
+  </view>
+
+  <!-- Preset questions -->
+  <view class="card">
+    <view class="card-title">预设问题</view>
+    <view class="chips">
+      <view wx:for="{{quickQuestions}}" wx:key="index" class="chip" data-index="{{index}}" bindtap="onPresetTap">{{item}}</view>
+    </view>
+    <view wx:if="{{running}}" class="hint"><text wx:if="{{!canAsk}}">后端尚未标记「可提问」，仍可尝试发送，回答可能较慢。</text></view>
+  </view>
+
+  <!-- Memory probe: layered questions, M_cur -> M_st -> M_lt -->
+  <view class="card">
+    <view class="card-title">记忆测试</view>
+    <view class="muted">小车采集时按顺序问。第 2 问能说出「现在已不在画面里」的东西，才说明记忆生效。</view>
+    <view class="btn-row" style="margin-top:16rpx">
+      <button class="btn small" data-q="我现在看到了什么？" bindtap="onMemoryAsk">① 当前场景</button>
+      <button class="btn small" data-q="刚才半分钟里，画面中出现过什么？" bindtap="onMemoryAsk">② 短期记忆</button>
+    </view>
+    <view class="btn-row" style="margin-top:14rpx">
+      <button class="btn small" data-q="再早一点，你在这张桌子上还看到过什么？" bindtap="onMemoryAsk">③ 长期记忆</button>
+      <button class="btn small" bindtap="onProbeMemory">检查记忆状态</button>
+    </view>
+    <view wx:if="{{memoryProbe}}" class="hint accent">{{memoryProbe}}</view>
+  </view>
+
+  <!-- Text / voice question -->
+  <view class="card">
+    <view class="card-title">提问</view>
+    <view class="row ask-row">
+      <input class="input grow" placeholder="输入一个问题…" value="{{questionText}}" bindinput="onQuestionInput" confirm-type="send" bindconfirm="onAskText" />
+      <button class="btn small primary" bindtap="onAskText" disabled="{{asking}}">提问</button>
+    </view>
+    <view class="btn-row" style="margin-top:18rpx">
+      <button class="btn {{voiceRecording ? 'danger' : ''}}" bindtap="onVoiceTap">{{voiceRecording ? '结束录音' : '语音提问'}}</button>
+      <button class="btn" bindtap="onPlayAnswer" disabled="{{!answerAudioUrl}}">播放回答</button>
+    </view>
+    <view wx:if="{{voiceStatus}}" class="hint accent">{{voiceStatus}}</view>
+    <view wx:if="{{voiceQuestionText}}" class="hint">识别结果：{{voiceQuestionText}}</view>
+    <view wx:if="{{asking}}" class="hint">回答生成中…</view>
+  </view>
+
+  <!-- Answer -->
+  <view class="card">
+    <view class="row-between">
+      <view class="card-title">回答</view>
+      <text class="muted">{{answerLatencyText}}</text>
+    </view>
+    <text wx:if="{{answer}}" class="answer-text" selectable>{{answer}}</text>
+    <view wx:else class="empty">尚无回答</view>
+  </view>
+
+  <view class="card">
+    <view class="row-between">
+      <view class="grow muted">后端地址、帧率、镜头与预设问题可在「设置」中修改</view>
+      <button class="btn small" bindtap="onGoSettings">设置</button>
+    </view>
+    <view class="btn-row" style="margin-top:16rpx">
+      <button class="btn small" bindtap="onClearSession">清除会话记忆</button>
+    </view>
+  </view>
+
+</view>

@@ -1,0 +1,24 @@
+.picker {
+  height: 76rpx;
+  line-height: 76rpx;
+  padding: 0 20rpx;
+  border-radius: 12rpx;
+  background: #f4f6f7;
+  font-size: 26rpx;
+}
+
+.dark .picker {
+  background: #24292e;
+}
+
+.setting-row {
+  padding: 16rpx 0;
+}
+
+.warn-text {
+  color: #a32323;
+}
+
+.dark .warn-text {
+  color: #ff8a8a;
+}

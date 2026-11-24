@@ -1,0 +1,29 @@
+{"method": "POST", "path": "/api/rokid/stream/start"}
+{"method": "POST", "path": "/api/rokid/sess-demo-001/frame", "fields": ["client_ts_ms", "format", "frame", "frame_index", "height", "relative_ts_ms", "source", "width"]}
+{"method": "POST", "path": "/api/rokid/sess-demo-001/audio_chunk", "fields": ["audio", "audio_index", "channels", "client_ts_ms", "duration_ms", "format", "relative_ts_ms", "sample_rate", "source"]}
+{"method": "POST", "path": "/api/rokid/sess-demo-001/frame", "fields": ["client_ts_ms", "format", "frame", "frame_index", "height", "relative_ts_ms", "source", "width"]}
+{"method": "POST", "path": "/api/rokid/sess-demo-001/frame", "fields": ["client_ts_ms", "format", "frame", "frame_index", "height", "relative_ts_ms", "source", "width"]}
+{"method": "POST", "path": "/api/rokid/sess-demo-001/frame", "fields": ["client_ts_ms", "format", "frame", "frame_index", "height", "relative_ts_ms", "source", "width"]}
+{"method": "POST", "path": "/api/rokid/sess-demo-001/frame", "fields": ["client_ts_ms", "format", "frame", "frame_index", "height", "relative_ts_ms", "source", "width"]}
+{"method": "POST", "path": "/api/rokid/sess-demo-001/frame", "fields": ["client_ts_ms", "format", "frame", "frame_index", "height", "relative_ts_ms", "source", "width"]}
+{"method": "POST", "path": "/api/rokid/sess-demo-001/frame", "fields": ["client_ts_ms", "format", "frame", "frame_index", "height", "relative_ts_ms", "source", "width"]}
+{"method": "POST", "path": "/api/rokid/sess-demo-001/audio_chunk", "fields": ["audio", "audio_index", "channels", "client_ts_ms", "duration_ms", "format", "relative_ts_ms", "sample_rate", "source"]}
+{"method": "POST", "path": "/api/rokid/sess-demo-001/frame", "fields": ["client_ts_ms", "format", "frame", "frame_index", "height", "relative_ts_ms", "source", "width"]}
+{"method": "POST", "path": "/api/rokid/sess-demo-001/frame", "fields": ["client_ts_ms", "format", "frame", "frame_index", "height", "relative_ts_ms", "source", "width"]}
+{"method": "POST", "path": "/api/rokid/sess-demo-001/frame", "fields": ["client_ts_ms", "format", "frame", "frame_index", "height", "relative_ts_ms", "source", "width"]}
+{"method": "POST", "path": "/api/stream/sess-demo-001/end"}
+{"method": "GET", "path": "/api/rokid/stream/active"}
+{"method": "GET", "path": "/api/rokid/stream/active"}
+{"method": "GET", "path": "/api/rokid/sess-demo-001/status"}
+{"method": "GET", "path": "/api/session/sess-demo-001/pipeline_state"}
+{"method": "POST", "path": "/api/ask/sess-demo-001"}
+{"method": "GET", "path": "/api/query_task/task-1"}
+{"method": "GET", "path": "/api/rokid/sess-demo-001/status"}
+{"method": "GET", "path": "/api/session/sess-demo-001/pipeline_state"}
+{"method": "GET", "path": "/api/session/sess-demo-001/memories"}
+{"method": "GET", "path": "/api/memories/catalog"}
+{"method": "POST", "path": "/api/ask/sess-demo-001"}
+{"method": "GET", "path": "/api/rokid/sess-demo-001/status"}
+{"method": "GET", "path": "/api/session/sess-demo-001/pipeline_state"}
+{"method": "GET", "path": "/api/query_task/task-2"}
+{"method": "GET", "path": "/api/rokid/stream/active"}

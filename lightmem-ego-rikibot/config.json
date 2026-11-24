@@ -1,0 +1,7 @@
+{
+  "backend_url": "http://192.168.0.105:8000",
+  "port": 8080,
+  "open_browser": true,
+  "browser_cmd": "chromium-browser",
+  "browser_flags": "--kiosk --no-sandbox --disable-gpu --window-size=1280,800 --use-fake-ui-for-media-stream"
+}
